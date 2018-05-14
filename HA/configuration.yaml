@@ -1,0 +1,141 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: 我爱我家
+  # Location required to calculate the time the sun rises and sets
+  latitude: 30.6667
+  longitude: 104.0667
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Asia/Shanghai
+  # Customization file
+  customize: !include customize.yaml
+
+# Show links to resources in log and frontend
+introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+  # api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+# Weather prediction
+sensor:
+  - platform: yr
+  - platform: time_date
+    display_options:
+      - 'time'
+#      - 'date'
+#      - 'date_time'
+#      - 'time_date'
+      - 'time_utc'
+#      - 'beat'
+#  - platform: worldclock
+#    time_zone: Asia/Shanghai
+
+    #空气质量
+  - platform: airvisual
+    api_key: !secret sensor_api_key
+    monitored_conditions:
+#      - us
+      - cn
+    latitude: 30.5579049682
+    longitude: 104.0336877108
+    radius: 500
+#  - platform: fitbit
+#    clock_format: 12H
+#    monitored_resources:
+#      - "body/weight"
+  - platform: dnsip
+  
+# 语音朗读
+#tts:
+#  - platform: google
+tts:
+  - platform: baidu
+    app_id: !secret tts_app_id
+    api_key: !secret tts_app_key
+    secret_key: !secret tts_app_secret_key
+    #语速，取值0-9，默认为5中语速
+    speed: 5 
+    #音调，取值0-9，默认为5中语调
+    pitch: 5
+    #音量，取值0-15，默认为5中音量
+    volume: 6
+    #发音人选择, 0为女声，1为男声，3为情感合成-度逍遥，4为情感合成-度丫丫，默认为0
+    person: 0
+
+# Cloud
+cloud:
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+# 小米网关
+xiaomi_aqara:
+  gateways:
+    - mac:
+      key: !secret xiaomi_aqara_key
+# 小米扫地机器人
+vacuum:
+  - platform: xiaomi_miio
+    host: 192.168.0.105
+    token: !secret vacuum_token
+    name: miRoboot
+#小米遥控器 
+switch:
+  - platform: chuangmi_ir
+    name: "Living Room IR Remote"
+    host: !secret switch_host
+    token: !secret switch_token
+    switches:
+      reciever:
+        command_on: 'Z6VHACoCAACPBgAAuAgAAIMRAAA3IwAAmJ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAQEBAQEBAQEAAAAAAAABAAEBAQEBAQABBQJAA='
+        command_off: 'Z6VHACoCAACPBgAAuAgAAIMRAAA3IwAAmJ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAQEBAQEBAQEAAAAAAAABAAEBAQEBAQABBQJAA='
+#雅虎天气
+weather:
+  - platform: yweather
+    woeid: 2158433
+    name: Chengdu
+    
+#语音
+media_player :
+  - platform: vlc
+    name: VLCplayer 
