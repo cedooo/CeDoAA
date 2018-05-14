@@ -1,8 +1,3 @@
-# CeDoHA
+# CeDoAA
 
-Home Assistant
-oauth2
-flask
-python
-Docker
-Linux(Centos7)
+Home Assistant && Work Assistant
