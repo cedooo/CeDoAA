@@ -3,7 +3,9 @@ cp homeassistant-pyvenv.service /usr/lib/systemd/system/homeassistant.service
 mkdir /cedo 
 cd /cedo
 yum -y update && yum -y install wget && wget --no-check-certificate "https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz" && tar xvf Python-3.6.5.tgz
-yum -y install zlib-devel zlib-static sqlite-devel gcc automake autoconf libtool make  openssl-devel sudo
+yum -y install zlib-devel zlib-static sqlite-devel gcc automake autoconf libtool make  openssl-devel sudo 
+# for 小米网关和百度语言
+yum -y install libffi-devel libjpeg-turbo-devel
 cd Python-3.6.5
 mkdir /usr/local/python3
 ./configure -prefix /usr/local/python3
