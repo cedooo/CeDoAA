@@ -1,5 +1,7 @@
 cp homeassistant.service /usr/lib/systemd/system/homeassistant.service
 yum -y install zlib-devel zlib-static  sqlite-devel  gcc automake autoconf libtool make  openssl-devel wget sudo
+# for 小米网关和百度语言
+yum -y install libffi-devel libjpeg-turbo-devel
 mkdir /cedo
 cd /cedo/
 wget --no-check-certificate https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz
