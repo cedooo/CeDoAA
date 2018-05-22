@@ -1,0 +1,11 @@
+[Unit]
+Description=fans controller
+After=network-online.target
+
+[Service]
+Type=simple
+User=%i
+ExecStart=/usr/bin/python /cedo/fan-contrl.py > /cedo/fan-contrl.log 2>&1
+
+[Install]
+WantedBy=multi-user.target
