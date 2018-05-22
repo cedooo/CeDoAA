@@ -1,4 +1,5 @@
 cp fan-control.service /usr/lib/systemd/system/fan-control.service
+cp fan-control.py /cedo/fan-control.py
 
 yum -y install python-devel
 cd /cedo
