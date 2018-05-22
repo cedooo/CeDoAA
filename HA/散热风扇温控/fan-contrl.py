@@ -6,8 +6,8 @@ import RPi.GPIO
 import time
 RPi.GPIO.setwarnings(False)
 RPi.GPIO.setmode(RPi.GPIO.BCM)
-RPi.GPIO.setup(2, RPi.GPIO.OUT)
-pwm = RPi.GPIO.PWM(2,100)
+RPi.GPIO.setup(14, RPi.GPIO.OUT)
+pwm = RPi.GPIO.PWM(14,100)
 RPi.GPIO.setwarnings(False)
 
 
@@ -34,7 +34,7 @@ try:
 				else :
 						pwm.stop()
 				prv_temp = cpu_temp
-				
+				print 'cpu温度：' + str(cpu_temp/1000) + ',转速：' + str(speed)				
 				time.sleep(5)
 				
 except KeyboardInterrupt:
