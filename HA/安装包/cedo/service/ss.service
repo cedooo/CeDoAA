@@ -1,0 +1,11 @@
+[Unit]
+Description=shadow socket
+After=network-online.target
+
+[Service]
+Type=simple
+User=%i
+ExecStart=/usr/bin/sslocal -c "/cedo/shadowsocks.json" --pid-file /var/run/sslocal.pid --log-file /var/log/sslocal.log 
+
+[Install]
+WantedBy=multi-user.target
