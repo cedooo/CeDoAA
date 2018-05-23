@@ -1,11 +1,11 @@
 {
-    "server":"0.0.0.0",
-    "server_port":8388,
-    "local_address": "127.0.0.1",
-    "local_port":1080,
-    "password":"密码",
-    "timeout":300,
-    "method":"aes-256-cfb",
-    "fast_open": false,
-    "workers": 1
+	"server":"服务器IP",
+	"server_port":服务器端口,
+	"local_address": "0.0.0.0",
+	"local_port":本地端口,
+	"password":"密码",
+	"timeout":300,
+	"method":"aes-256-cfb",
+	"fast_open": false,
+	"workers": 1
 }
