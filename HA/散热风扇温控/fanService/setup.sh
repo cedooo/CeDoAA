@@ -8,4 +8,4 @@ wget https://files.pythonhosted.org/packages/e2/58/6e1b775606da6439fa3fd1550e7f7
 	&& cd RPi.GPIO-0.6.3 \
 	&& python setup.py install
 
-systemctl enable homeassistant.service
+systemctl enable fan-control.service
