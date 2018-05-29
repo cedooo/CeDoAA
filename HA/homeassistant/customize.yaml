@@ -1,0 +1,14 @@
+vacuum.miroboot:
+  friendly_name: 小S
+weather.chengdu:
+  friendly_name: 成都
+sensor.time:
+  friendly_name: 时间
+sensor.time_utc:
+  friendly_name: 标准时间
+sun.sun:
+  friendly_name: 太阳
+sensor.yr_symbol:
+  friendly_name: 光照
+switch.fan_office:
+  friendly_name: 电脑散热风扇
