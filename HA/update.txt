@@ -1,0 +1,24 @@
+
+# 查看版本信息
+npm info homebridge
+# 升级homebridge
+npm install -g homebridge
+
+
+
+
+####################
+
+https://www.home-assistant.io/docs/installation/virtualenv/#upgrading-home-assistant
+
+
+UPGRADE
+Stop Home Assistant
+
+Open the directory where the virtual environment is located:
+$ cd homeassistant
+Activate the virtual environment:
+$ source bin/activate
+Upgrade Home Assistant:
+$ python3 -m pip install --upgrade homeassistant
+Start Home Assistant
