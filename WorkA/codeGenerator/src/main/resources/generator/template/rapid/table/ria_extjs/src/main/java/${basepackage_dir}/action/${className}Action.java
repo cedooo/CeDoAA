@@ -5,12 +5,6 @@
 <#assign actionExtension = "do">
 package ${basepackage}.action;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javacommon.util.extjs.ExtJsPageHelper;
 import javacommon.util.extjs.ListRange;
 
@@ -20,12 +14,10 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
-import cn.org.rapid_framework.generator.provider.java.model.JavaClass;
-import cn.org.rapid_framework.generator.provider.java.model.JavaField;
 import cn.org.rapid_framework.page.Page;
 import cn.org.rapid_framework.page.PageRequest;
 
-import ${basepackage}.model.${className};
+{basepackage}.model.${className};
 import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.ModelDriven;
 import static javacommon.util.extjs.Struts2JsonHelper.*;
