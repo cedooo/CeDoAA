@@ -1,0 +1,17 @@
+FROM centos:7
+
+RUN buildDeps='wget gcc libffi-devel make git' \
+	&& yum update -y \
+	&& yum install -y $buildDeps \
+	&& wget https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tar.xz \
+	&& tar xJf Python-3.7.2.tar.xz \
+	&& cd Python-3.7.2 \
+	&& ./configure \
+	&& make \
+	&& make install \
+	&& easy_install pip \ 
+	&& pip install git+https://github.com/shadowsocks/shadowsocks/tree/master \
+    && yum remove $buildDeps
+COPY ./shadowsocks.json /etc/
+
+CMD /usr/bin/sslocal -c /etc/shadowsocks.json start
