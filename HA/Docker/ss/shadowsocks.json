@@ -1,9 +1,9 @@
 {
-        "server":"207.246.113.240",
+        "server":"IP",
         "server_port":65533,
         "local_address": "0.0.0.0",
         "local_port":32811,
-        "password":"1qazXSW@",
+        "password":"password",
         "timeout":1500,
         "method":"aes-256-cfb",
         "fast_open": false,
