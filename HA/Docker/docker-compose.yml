@@ -1,0 +1,11 @@
+version: '3'
+services:
+  web:
+    build: ./flashdemo/
+    ports:
+     - "5000:5000"
+  redis:
+    image: "redis:alpine"
+  ss:
+    build: ./ss/
+    command: -s 服务器IP -p 65533 -l 32811 -k 密码 -m aes-256-cfb
