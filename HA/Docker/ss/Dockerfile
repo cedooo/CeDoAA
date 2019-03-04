@@ -25,4 +25,10 @@ COPY shadowsocks.json /cedo/
 EXPOSE 32811/tcp
 EXPOSE 32811/udp
 
-CMD sslocal -c ./shadowsocks.json start
+# 使用shadowsocks.json配置使用
+# CMD sslocal -c ./shadowsocks.json start
+
+# 通过docker run 指定配置
+# docker run cd:t -s 服务器地址 -p 服务器端口 -l 本地端端口 -k 密码 -m 加密方法
+# 例如:  docker run cd:t -s 1.2.3.4 -p 65533 -l 32811 -k 服务器ss密码 -m aes-256-cfb
+ENTRYPOINT ["sslocal"] 
