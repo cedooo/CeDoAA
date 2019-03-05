@@ -8,4 +8,6 @@ services:
     image: "redis:alpine"
   ss:
     build: ./ss/
-    command: -s 服务器IP -p 65533 -l 32811 -k 密码 -m aes-256-cfb
+    command: -s 207.246.113.240 -p 65533 -l 32811 -k 1qazXSW@ -m aes-256-cfb
+    ports:
+     - "32811:32811"
