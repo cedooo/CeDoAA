@@ -15,5 +15,7 @@ services:
     image: homeassistant/raspberrypi3-homeassistant
     ports:
      - "8123:8123"
+     # https://www.home-assistant.io/docs/installation/docker/
+     # for raspberrypi3
      # replace /PATH_TO_YOUR_CONFIG with your path to the configuration
-    command: --init -d --name="home-assistant" -v /PATH_TO_YOUR_CONFIG:/config -v /etc/localtime:/etc/localtime:ro --net=host
+    command: --init -d --name="home-assistant" -v /cedo/config:/config -v /etc/localtime:/etc/localtime:ro --net=host
