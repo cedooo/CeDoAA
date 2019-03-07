@@ -25,7 +25,7 @@ def hello():
     count = get_hit_count()
     return 'Hello World! I have been seen {} times.\n'.format(count)
 #处理git webhook
-@app.route('/cedoci')
+@app.route('/cedoci', methods=['POST'])
 def cedoci():
     return 'the git push!\n'
 	
