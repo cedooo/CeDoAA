@@ -12,7 +12,8 @@ services:
     ports:
      - "32811:32811"
   homeassistant:
-    build: ./homeassistant/
+    image: homeassistant/raspberrypi3-homeassistant
     ports:
      - "8123:8123"
-    command: --init -d --name="home-assistant" -v /PATH_TO_YOUR_CONFIG:/config -v /etc/localtime:/etc/localtime:ro --net=host homeassistant/raspberrypi3-homeassistant
+     # replace /PATH_TO_YOUR_CONFIG with your path to the configuration
+    command: --init -d --name="home-assistant" -v /PATH_TO_YOUR_CONFIG:/config -v /etc/localtime:/etc/localtime:ro --net=host
