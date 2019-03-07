@@ -11,3 +11,8 @@ services:
     command: -s 207.246.113.240 -p 65533 -l 32811 -k 1qazXSW@ -m aes-256-cfb
     ports:
      - "32811:32811"
+  homeassistant:
+    build: ./homeassistant/
+    ports:
+     - "8123:8123"
+    command: --init -d --name="home-assistant" -v /PATH_TO_YOUR_CONFIG:/config -v /etc/localtime:/etc/localtime:ro --net=host homeassistant/raspberrypi3-homeassistant
