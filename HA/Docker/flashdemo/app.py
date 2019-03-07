@@ -26,7 +26,7 @@ def hello():
     return 'Hello World! I have been seen {} times.\n'.format(count)
 
 @app.route('/cedoci')
-def hello():
+def cedoci():
     return 'the git push!\n'
 	
 if __name__ == "__main__":
