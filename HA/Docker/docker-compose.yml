@@ -18,4 +18,4 @@ services:
      # https://www.home-assistant.io/docs/installation/docker/
      # for raspberrypi3
      # replace /PATH_TO_YOUR_CONFIG with your path to the configuration
-    command: --init -d --name="home-assistant" -v /cedo/config:/config -v /etc/localtime:/etc/localtime:ro --net=host
+    command: --init -d --name="home-assistant" -v /cedo/homeassistant:/config -v /etc/localtime:/etc/localtime:ro --net=host
