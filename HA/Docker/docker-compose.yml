@@ -21,7 +21,7 @@ services:
      - /cedo/homeassistant:/config
      - /etc/localtime:/etc/localtime:ro
     network_mode: "host"
-    command: --init -d --name="home-assistant"
+    init: true
 #  homeassistant:
 #    build: ./homeassistant/
 #    volumes: 
