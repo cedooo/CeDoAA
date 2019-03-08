@@ -20,7 +20,7 @@ services:
     volumes: 
      - /cedo/homeassistant:/config
      - /etc/localtime:/etc/localtime:ro
-    network_mode: "host"
+    # network_mode: "host"
     init: true
 #  homeassistant:
 #    build: ./homeassistant/
