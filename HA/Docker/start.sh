@@ -3,7 +3,7 @@
 #创建工作目录
 cedopath="/cedo/"
 cedohasspath="${cedopath}homeassistant/"
-if [ ! -d "$cedopath"] 
+if [ ! -d "$cedopath" ] 
 then 
 	echo "创建工作目录"
 	mkdir "$cedopath" 
@@ -12,7 +12,7 @@ else
 fi 
 
 #准备homeassistant配置文件
-if [ ! -d "$cedohasspath"] 
+if [ ! -d "$cedohasspath" ] 
 then 
 	echo "准备homeassistant配置文件"
 	mkdir "$cedohasspath"  
