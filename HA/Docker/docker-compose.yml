@@ -25,7 +25,7 @@ services:
 #  homeassistant:
 #    build: ./homeassistant/
 #    volumes: 
-#     - .:/opt/app-root/src/.hass/config
+#     - ./homeassistant:/opt/app-root/src/.hass/config
 #    command: --config /opt/app-root/src/.hass/config
 #    ports:
 #     - "8123:8123"
