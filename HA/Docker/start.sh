@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #创建工作目录
-cedopath = "/cedo/"
-cedohasspath = "${cedopath}homeassistant/"
+cedopath="/cedo/"
+cedohasspath="${cedopath}homeassistant/"
 if [ ! -d "$cedopath"] then 
 echo "创建工作目录"
 mkdir "$cedopath" 
