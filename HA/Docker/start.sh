@@ -22,6 +22,17 @@ else
 	echo "homeassistant配置文件已存在"
 fi 
 
+#安装docker
+if [ ! -f "/usr/bin/docker" ] 
+then 
+	echo "安装docker"
+	sudo yum install docker-ce docker-ce-cli containerd.io -y
+	sudo systemctl start docker
+else
+	echo "docker已安装"
+fi 
+
+
 #安装docker-compose
 if [ ! -f "/usr/local/bin/docker-compose" ] 
 then 
