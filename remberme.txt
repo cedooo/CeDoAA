@@ -1,3 +1,7 @@
 aHR0cHM6Ly9zaGFkb3dzb2Nrcy5iZS85Lmh0bWw=
 aHR0cHM6Ly9wcm9ncmFtZnJlZWRvbS5naXRodWIuaW8vZ2Z3Lw==
 aHR0cHM6Ly9qdWVqaW4uaW0vZW50cnkvNWI4ZTUzMDhlNTFkNDU1ODliMjZiZTI2
+
+CentOS 7命令行使用shadowsocks
+
+aHR0cHM6Ly93b2ouYXBwLzM4NTcuaHRtbA==
