@@ -49,12 +49,6 @@ pFullPath = programPath + "\\" + programeName
 
 def loadWinAndRestartWinShadowsocks():
 
-    with open(file_Shadowsocks_config, 'r') as f:
-        data = json.load(f)
-        data['configs'] = ssserver
-    with open(file_Shadowsocks_config, 'w') as f:
-        json.dump(data, f)
-
     pid = getWinPid(programeName)
     if(pid>0):
         os.popen('TASKKILL /F /PID ' + str(pid))
@@ -67,4 +61,10 @@ def loadWinAndRestartWinShadowsocks():
 if __name__ == "__main__":
     ssserver = getFreeSS()
     print(ssserver)
+
+    with open(file_Shadowsocks_config, 'r') as f:
+        data = json.load(f)
+        data['configs'] = ssserver
+    with open(file_Shadowsocks_config, 'w') as f:
+        json.dump(data, f)
     loadWinAndRestartWinShadowsocks()
