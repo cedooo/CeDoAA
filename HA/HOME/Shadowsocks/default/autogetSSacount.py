@@ -9,8 +9,11 @@ from lxml import html
 
 def getFreeSS():
     youneedSSUrl = "https://www.youneed.win/free-ss"
-    scraper = cfscrape.create_scraper()  # returns a CloudflareScraper instance
+    sp = cfscrape.create_scraper()  # returns a CloudflareScraper instance
     # Or: scraper = cfscrape.CloudflareScraper()  # CloudflareScraper inherits from requests.Session
+    proxy = {"http": "http://localhost:10811", "https": "http://localhost:10811"}
+    sp.proxies = proxy
+    scraper = cfscrape.create_scraper(sess=sp)
     rsponse = scraper.get(youneedSSUrl)
     # print(rsponse.text)  # => "<!DOCTYPE html><html><head>..."
     if (rsponse.status_code == 200):
@@ -59,9 +62,11 @@ def loadWinAndRestartWinShadowsocks():
 
 
 if __name__ == "__main__":
+    shaPid = getWinPid(programeName)
+    if shaPid < 0:
+        os.system("START /B " + pFullPath)
     ssserver = getFreeSS()
     print(ssserver)
-
     with open(file_Shadowsocks_config, 'r') as f:
         data = json.load(f)
         data['configs'] = ssserver
