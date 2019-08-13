@@ -45,10 +45,11 @@ def getWinPid(pname):
         if pname == p.name():
             return pid
     return -1
-programPath = "C:\greenSoftware"
+programPath = os.path.dirname(os.path.abspath(__file__))
+fileSep = os.path.sep
 programeName = "Shadowsocks.exe"
-file_Shadowsocks_config = programPath + "\gui-config.json"
-pFullPath = programPath + "\\" + programeName
+file_Shadowsocks_config = programPath + fileSep + "gui-config.json"
+pFullPath = programPath + fileSep + programeName
 
 def loadWinAndRestartWinShadowsocks():
 
