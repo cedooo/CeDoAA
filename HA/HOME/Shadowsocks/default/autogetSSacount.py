@@ -31,7 +31,7 @@ def getFreeSS():
             method = 'aes-256-cfb'# serverObjAttrs[startIndex+3] #aes-256-cfb or
             tm = serverObjAttrs[startIndex+4]
             country = serverObjAttrs[startIndex+5]
-            sjson = {"server": ip, "server_port": int(port), "password": passwd, "method": method, "remarks": ip+"-"+country}
+            sjson = {"server": ip, "server_port": int(port), "password": passwd, "method": method, "remarks": country+"[" + time.strftime("%Y-%m-%d ", time.localtime())+tm+"]"}
             servers.append(sjson)
         return servers
     else:
@@ -45,7 +45,7 @@ def getWinPid(pname):
         if pname == p.name():
             return pid
     return -1
-programPath = "C:\GreenSoft"
+programPath = "C:\greenSoftware"
 programeName = "Shadowsocks.exe"
 file_Shadowsocks_config = programPath + "\gui-config.json"
 pFullPath = programPath + "\\" + programeName
@@ -65,11 +65,18 @@ if __name__ == "__main__":
     shaPid = getWinPid(programeName)
     if shaPid < 0:
         os.system("START /B " + pFullPath)
-    ssserver = getFreeSS()
-    print(ssserver)
-    with open(file_Shadowsocks_config, 'r') as f:
-        data = json.load(f)
-        data['configs'] = ssserver
-    with open(file_Shadowsocks_config, 'w') as f:
-        json.dump(data, f)
-    loadWinAndRestartWinShadowsocks()
+    try: 
+        ssserver = getFreeSS()
+    except:
+        print("获取账号失败！")
+        ssserver = [] 
+    if len(ssserver) > 0: 
+        print(ssserver)
+        with open(file_Shadowsocks_config, 'r') as f:
+            data = json.load(f)
+            data['configs'] = ssserver
+        with open(file_Shadowsocks_config, 'w') as f:
+            json.dump(data, f)
+        loadWinAndRestartWinShadowsocks()
+    else:
+        print("更新账号失败!")
