@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.*;
+import org.springframework.stereotype.Repository;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -24,6 +25,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @PropertySources({
     @PropertySource(value = "classpath:application-swagger2.properties",encoding = "utf-8")
 })
+@Profile("dev")
 public class SwaggerAutoConfiguration {
 
     // 注入属性类
@@ -53,7 +55,7 @@ public class SwaggerAutoConfiguration {
                 .title(swagger2Properties.getTitle())
                 .description(swagger2Properties.getDesc())
                 .termsOfServiceUrl(swagger2Properties.getServiceUrl())
-                .contact(swagger2Properties.getContact())
+                //.contact(swagger2Properties.getContact())
                 .contact(contact)
                 .version(swagger2Properties.getVersion())
                 .license(swagger2Properties.getLicense())
