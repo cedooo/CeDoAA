@@ -7,7 +7,7 @@
 		2.可以引用环境变量: ${env.JAVA_HOME} or System.properties: ${user.home},property之间也可以相互引用
 	</comment>
 	
-	<entry key="basepackage">top.eeeqxxtg</entry>
+	<entry key="basepackage">com.bst.sdk</entry>
 	
 	<!-- jsp namespace: web/${namespace}/${className}/list.jsp -->
 	<entry key="namespace">pages</entry>
@@ -15,10 +15,10 @@
 	<entry key="outRoot">.\target\generator-output</entry>
 
 	<!-- 需要移除的表名前缀,使用逗号进行分隔多个前缀,示例值: t_,v_ -->
-	<entry key="tableRemovePrefixes"></entry>
+	<entry key="tableRemovePrefixes">tbl_sdk</entry>
 	
-	<entry key="jdbc_username">sa</entry>
-	<entry key="jdbc_password"></entry>
+	<entry key="jdbc_username">root</entry>
+	<entry key="jdbc_password">Szyw@114</entry>
 		
 	<!-- oracle需要指定jdbc.schema,其它数据库忽略此项配置  -->
 	<entry key="jdbc_schema"></entry>
@@ -33,13 +33,13 @@
 	<entry key="java_typemapping.java.math.BigDecimal">Long</entry>
 
 	<!-- H2 -->
-	<entry key="jdbc_url">jdbc:h2:~/test</entry>
-	<entry key="jdbc_driver">org.h2.Driver</entry>
+	<!--<entry key="jdbc_url">jdbc:h2:~/test</entry>
+	<entry key="jdbc_driver">org.h2.Driver</entry>-->
 		
-	<!-- Mysql 
-	<entry key="jdbc_url">jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8</entry>
-	<entry key="jdbc_driver">com.mysql.jdbc_driver</entry>
-	-->
+	<!-- Mysql -->
+	<entry key="jdbc_url">jdbc:mysql://192.168.0.114:3366/gamesdk?characterEncoding=utf8</entry>
+	<entry key="jdbc_driver">com.mysql.jdbc.Driver</entry>
+
 
 	<!-- Oracle 	jdbc:oracle:oci:@tnsname_devdb
 	<entry key="jdbc_url">jdbc:oracle:thin:@192.168.0.177:1521:[sid]</entry>

@@ -20,7 +20,11 @@ public class App
         System.out.println( "Hello World!" );
         Table t = new Table();
 
-        printBeanDescprtions(t.getClass());
+        //printBeanDescprtions(t.getClass());
+
+
+        String tR = ".*:((.*);{0,1})+";
+        System.out.println("平台类型:1(IOS);2(安卓);3(H5)".matches(tR));
     }
 
     private static void printCon(){

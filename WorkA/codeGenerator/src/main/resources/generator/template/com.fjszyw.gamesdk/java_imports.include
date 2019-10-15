@@ -1,0 +1,3 @@
+import ${basepackage}.${className?uncap_first}.mapper.*;
+import ${basepackage}.${className?uncap_first}.pojo.*;
+import ${basepackage}.${className?uncap_first}.vo.*;
