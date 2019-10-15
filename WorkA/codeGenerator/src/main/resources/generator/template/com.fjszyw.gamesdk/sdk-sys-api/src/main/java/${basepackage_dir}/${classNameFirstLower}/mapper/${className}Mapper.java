@@ -19,6 +19,29 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface ${className}Mapper {
 
-	public
+	/**
+	 * 插入新的记录
+	 */
+	public int insert(${className} ${classNameFirstLower});
+	/**
+	 * 更新记录
+	 */
+	public int update(${className} ${classNameFirstLower});
+	/**
+	 * 删除记录
+	 */
+	public int delete(long id);
+	/**
+	 * 根据ID查询记录
+	 */
+	public ${className} getById(long id);
+	/**
+	 * 查询分页总数
+	 */
+	public long findPageCount(${className}Query ${classNameFirstLower}Query);
+	/**
+	 * 查询分页数据
+	 */
+	public List<${className}> findPage(${className}Query ${classNameFirstLower}Query);
 
 }
