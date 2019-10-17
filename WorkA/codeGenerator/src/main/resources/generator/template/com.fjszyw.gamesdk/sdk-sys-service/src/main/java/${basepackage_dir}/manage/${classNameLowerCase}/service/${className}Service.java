@@ -1,18 +1,18 @@
 <#include "/java_copyright.include">
 <#assign className = table.className>   
-<#assign classNameLower = className?uncap_first> 
-package ${basepackage}.service;
+<#assign classNameLower = className?uncap_first>
+<#assign classNameLowerCase = className?lower_case>
+package ${basepackage}.manage.${classNameLowerCase}.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
+import com.bst.sdk.common.util.Page;
+import ${basepackage}.manage.query.${className}Query;
 
 <#include "/java_imports.include">
 
 /**
 <#include "/java_description.include">
  */
-public interface ${className}Manager {
+public interface ${className}Service {
 
 	/** 
 	 * 创建${className}

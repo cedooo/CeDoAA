@@ -4,9 +4,9 @@
 <#assign classNameFirstLower = className?uncap_first>
 <#assign classNameLowerCase = className?lower_case>
 <#assign pkJavaType = table.idColumn.javaType>
-package ${basepackage}.model;
+package ${basepackage}.manage.vo;
 
-import ${basepackage}.${classNameFirstLower}.pojo.${className};
+import ${basepackage}.manage.pojo.${className};
 import com.bst.sdk.common.util.DateUtil;
 
 <#include "/java_imports.include">
@@ -20,7 +20,8 @@ public class ${className}Vo extends ${className}  implements java.io.Serializabl
 	private static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
 	//alias
-	public static final String TABLE_ALIAS = "${table.tableAlias}";
+	public static final String TABLE_ALIAS = <#list table.columns as column><#if column.columnNameLower == 'id'>"${column.columnAlias?substring(0,column.columnAlias?index_of('ID'))}"</#if></#list>;//"${table.tableAlias}";
+
 	<#list table.columns as column>
 	<#if column.columnAlias?matches('.+:.*')>
 	public static final String ALIAS_${column.constantName} = "${column.columnAlias?substring(0,column.columnAlias?index_of(':'))}";

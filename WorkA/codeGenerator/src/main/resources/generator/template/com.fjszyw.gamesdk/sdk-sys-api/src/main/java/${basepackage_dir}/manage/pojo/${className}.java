@@ -6,7 +6,7 @@
 <#assign classNameFirstLower = className?uncap_first>
 <#assign classNameLowerCase = className?lower_case>
 <#assign pkJavaType = table.idColumn.javaType>
-package ${basepackage}.${classNameFirstLower}.pojo;
+package ${basepackage}.manage.pojo;
 
 import javax.validation.constraints.*;
 import org.hibernate.validator.constraints.*;

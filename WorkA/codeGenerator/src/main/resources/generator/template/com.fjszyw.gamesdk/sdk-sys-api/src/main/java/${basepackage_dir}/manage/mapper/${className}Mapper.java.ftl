@@ -6,13 +6,11 @@
 <#assign classNameFirstLower = className?uncap_first>
 <#assign classNameLowerCase = className?lower_case>
 <#assign pkJavaType = table.idColumn.javaType>
-package ${basepackage}.${classNameFirstLower}.mapper;
-
+package ${basepackage}.manage.mapper;
 
 import java.util.List;
-import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
+import ${basepackage}.manage.pojo.${className};
+import ${basepackage}.manage.query.${className}Query;
 
 /**
  <#include "/java_description.include">
@@ -38,7 +36,7 @@ public interface ${className}Mapper {
 	/**
 	 * 查询分页总数
 	 */
-	public long findPageCount(${className}Query ${classNameFirstLower}Query);
+	public int findPageCount(${className}Query ${classNameFirstLower}Query);
 	/**
 	 * 查询分页数据
 	 */

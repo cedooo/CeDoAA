@@ -1,18 +1,19 @@
 <#include "/macro.include"/>
 <#assign className = table.className>   
-<#assign classNameFirstLower = table.classNameFirstLower>   
+<#assign classNameFirstLower = table.classNameFirstLower>
+<#assign classNameLowerCase = className?lower_case>
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
 PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
 <#macro mapperEl value>${r"#{"}${value}}</#macro>
-<#macro namespace>${className}.</#macro>
+<#macro namespace>${className}</#macro>
 
 <!-- 不使用namespace的话sql搜索定位会比较方便 -->
-<mapper namespace="${basepackage}.${classNameFirstLower}.${className}Mapper">
+<mapper namespace="${basepackage}.manage.mapper.${className}Mapper">
 
-	<resultMap id="RM.${className}" type="${basepackage}.model.${className}">
+	<resultMap id="RM${className}" type="${basepackage}.manage.pojo.${className}">
         <#list table.columns as column>
         <result property="${column.columnNameLower}" column="${column.sqlName}"/>
 		</#list>
@@ -61,7 +62,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     ]]>
     </delete>
     
-    <select id="getById" resultMap="RM.${className}">
+    <select id="getById" resultMap="RM${className}">
 		SELECT <include refid="<@namespace/>columns" />
 	    <![CDATA[
 		    FROM ${table.sqlName} 
@@ -72,7 +73,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	    ]]>
 	</select>
 	
-	<sql id="<@namespace/>findPage.where">
+	<sql id="<@namespace/>findPageWhere">
 		<!-- ognl访问静态方法的表达式 为@class@method(args),以下为调用rapid中的Ognl.isNotEmpty()方法,还有其它方法如isNotBlank()可以使用，具体请查看Ognl类 -->
 		<where>	      				
 	       <#list table.columns as column>
@@ -92,19 +93,19 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		</where>
 	</sql>
 		
-    <select id="findPageCount" resultType="long">
+    <select id="findPageCount" resultType="int">
         SELECT count(*) FROM ${table.sqlName} 
-		<include refid="<@namespace/>findPage.where"/>    
+		<include refid="<@namespace/>findPageWhere"/>
     </select>
     
     <!--
     	分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页
     	因为分页查询将传 offset,pageSize,lastRows 三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现
     -->
-    <select id="findPage" resultMap="RM.${className}">
+    <select id="findPage" resultMap="RM${className}">
     	SELECT <include refid="<@namespace/>columns" />
 	    FROM ${table.sqlName} 
-		<include refid="<@namespace/>findPage.where"/>
+		<include refid="<@namespace/>findPageWhere"/>
 		
 		<if test="@Ognl@isNotEmpty(sortColumns)">
 			ORDER BY <@jspEl 'sortColumns'/>
@@ -113,7 +114,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
     <#list table.columns as column>
     <#if column.unique && !column.pk>
-    <select id="getBy${column.columnName}" resultMap="RM.${className}" parameterType="${column.javaType}">
+    <select id="getBy${column.columnName}" resultMap="RM${className}" parameterType="${column.javaType}">
 	    SELECT <include refid="<@namespace/>columns"/>
 	    FROM ${table.sqlName} where ${column.sqlName} = <@mapperEl column.columnNameLower/>
     </select>

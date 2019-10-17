@@ -32,11 +32,6 @@
       <version>4.0.6</version>
     </dependency>
     <dependency>
-      <groupId>com.googlecode.rapid-framework</groupId>
-      <artifactId>rapid-generator-template</artifactId>
-      <version>4.0.6</version>
-    </dependency>
-    <dependency>
       <groupId>org.freemarker</groupId>
       <artifactId>freemarker</artifactId>
       <version>2.3.23</version>
@@ -57,6 +52,14 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>${mysql.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>cn.org</groupId>
+      <artifactId>rapid_framework</artifactId>
+      <version>4.0.4</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/rapid-core-4.0.4-sources.jar</systemPath>
     </dependency>
   </dependencies>
 

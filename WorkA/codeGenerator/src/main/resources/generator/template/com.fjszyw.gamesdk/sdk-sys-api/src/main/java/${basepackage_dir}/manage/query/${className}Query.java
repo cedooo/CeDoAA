@@ -1,13 +1,16 @@
 <#include "/macro.include"/>
 <#include "/java_copyright.include">
 <#assign className = table.className>   
-<#assign classNameLower = className?uncap_first> 
-package ${basepackage}.${classNameFirstLower}.query;
+<#assign classNameLower = className?uncap_first>
+<#assign classNameFirstLower = className?uncap_first>
+<#assign classNameLowerCase = className?lower_case>
+package ${basepackage}.manage.query;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import com.bst.sdk.common.util.Page;
 
 import java.io.Serializable;
 
@@ -16,7 +19,7 @@ import java.io.Serializable;
 /**
 <#include "/java_description.include">
  */
-public class ${className}Query extends PageRequest implements Serializable {
+public class ${className}Query extends Page implements Serializable {
     private static final long serialVersionUID = 3148176768559230877L;
     
 	<@generateFields/>
