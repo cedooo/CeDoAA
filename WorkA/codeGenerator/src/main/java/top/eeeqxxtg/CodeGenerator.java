@@ -28,7 +28,8 @@ public class CodeGenerator {
                 "tbl_sdk_game_customer_service_qa",
                 "tbl_sdk_game_notice",
                 "tbl_sdk_game_platinum_bag",
-                "tbl_sdk_game_platinum_seria_no");
+                "tbl_sdk_game_platinum_seria_no",
+                "tbl_sdk_game_platinum_getter");
 
 //        自动搜索数据库中的所有表并生成文件,template为模板的根目录
 //        g.generateByAllTable();
