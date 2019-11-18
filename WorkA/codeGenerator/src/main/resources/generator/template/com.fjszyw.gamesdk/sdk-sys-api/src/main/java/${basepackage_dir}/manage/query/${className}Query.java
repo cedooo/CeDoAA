@@ -39,6 +39,7 @@ public class ${className}Query extends Page implements Serializable {
 	private ${column.javaType} ${column.columnNameLower}Begin;
 	private ${column.javaType} ${column.columnNameLower}End;
 	<#else>
+	${column.hibernateValidatorExprssion}
 	private ${column.javaType} ${column.columnNameLower};
 	</#if>
 	</#list>

@@ -30,10 +30,6 @@ public interface ${className}Mapper {
 	 */
 	public int delete(long id);
 	/**
-	* 删除记录
-	*/
-	public int deleteWithTag(long id);
-	/**
 	 * 根据ID查询记录
 	 */
 	public ${className} getById(long id);

@@ -2,7 +2,7 @@
 <#assign className = table.className>   
 <#assign classNameLowerFirst = className?uncap_first>
 <#assign classNameLower = className?lower_case>
-package ${basepackage}.service.impl;
+package ${basepackage}.manage.${classNameLower}.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,7 @@ import ${basepackage}.manage.${classNameLower}.service.${className}Service;
 <#include "/java_imports.include">
 
 import java.util.List;
+import java.util.Date;
 /**
 <#include "/java_description.include">
  */
@@ -35,6 +36,7 @@ public class ${className}ServiceImpl implements ${className}Service {
 	/** 
 	 * 创建${className}
 	 **/
+	@Override
 	public ${className} save(${className} ${classNameLowerFirst}) {
 	    Assert.notNull(${classNameLowerFirst},"'${classNameLowerFirst}' must be not null");
 	    initDefaultValuesForCreate(${classNameLowerFirst});
@@ -45,10 +47,14 @@ public class ${className}ServiceImpl implements ${className}Service {
 	
 	/** 
 	 * 更新${className}
-	 **/	
+	 **/
+	@Override
     public ${className} update(${className} ${classNameLowerFirst}) {
         Assert.notNull(${classNameLowerFirst},"'${classNameLowerFirst}' must be not null");
         new ${className}Checker().checkUpdate${className}(${classNameLowerFirst});
+		${classNameLowerFirst}.setUpdateTime(new Date());
+		${classNameLowerFirst}.setDelTag(null);
+		${classNameLowerFirst}.setCreateTime(null);
         this.${classNameLowerFirst}Mapper.update(${classNameLowerFirst});
         return ${classNameLowerFirst};
     }	
@@ -56,13 +62,15 @@ public class ${className}ServiceImpl implements ${className}Service {
 	/** 
 	 * 删除${className}
 	 **/
+	@Override
     public void removeById(${table.idColumn.javaType} id) {
         this.${classNameLowerFirst}Mapper.delete(id);
     }
     
 	/** 
 	 * 根据ID得到${className}
-	 **/    
+	 **/
+	@Override
     public ${className} getById(${table.idColumn.javaType} id) {
         return this.${classNameLowerFirst}Mapper.getById(id);
     }
@@ -71,11 +79,12 @@ public class ${className}ServiceImpl implements ${className}Service {
 	 * 分页查询: ${className}
 	 **/      
 	@Transactional(readOnly=true)
+	@Override
 	public Page findPage(${className}Query query) {
 		PageHelper.startPage(query.getPage(), query.getPagecount());
 		Assert.notNull(query,"'query' must be not null");
 		List<${className}> list =  ${classNameLowerFirst}Mapper.findPage(query);
-		int total = gameNoticeMapper.findPageCount(query);
+		int total = ${classNameLowerFirst}Mapper.findPageCount(query);
 		Page page = new Page();
 		page.setRows(list);
 		page.setRecords(total);
@@ -96,6 +105,8 @@ public class ${className}ServiceImpl implements ${className}Service {
 	 * 为创建时初始化相关默认值 
 	 **/
     public void initDefaultValuesForCreate(${className} v) {
+		v.setCreateTime(new Date());
+		v.setDelTag("0");
     }
     
     /**
@@ -120,4 +131,12 @@ public class ${className}ServiceImpl implements ${className}Service {
         	//复杂的属性的检查一般需要分开写几个方法，如 checkProperty1(v),checkProperty2(v)
         }
     }
+
+	@Override
+    public void delBatch(Long[] ids) {
+		for(Long id : ids) {
+			${classNameLowerFirst}Mapper.deleteWithTag(id);
+		}
+	}
+
 }

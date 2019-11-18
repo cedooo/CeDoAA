@@ -2,6 +2,9 @@ package top.eeeqxxtg;
 
 import cn.org.rapid_framework.generator.GeneratorFacade;
 
+/**
+ * @author cedoo cedoo(@)qq.com
+ */
 public class CodeGenerator {
 
     public static void main(String[] args) throws Exception {

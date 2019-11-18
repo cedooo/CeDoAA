@@ -45,8 +45,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<#list table.columns as column>
 							{
 								name: "<#if column.isDateTimeColumn>${column.columnNameLower}<#else>${column.columnNameLower}</#if>",index: "${column.columnNameLower}",
-								width: 10,sorttype: "int",align:"center",sortable:false, hidden: false
-                                <#if column.columnNameLower?ends_with("Tag")||column.columnNameLower?ends_with("Type")||column.columnNameLower?ends_with("stats")>
+								width: 10,sorttype: "int",align:"center",sortable:false
+								<#if column.columnNameLower?ends_with("id")||column.columnNameLower?ends_with("createTime")||column.columnNameLower?ends_with("updateTime")|| column.columnNameLower?ends_with("delTag") >
+								,hidden: true
+								</#if>
+                                <#if column.columnNameLower?ends_with("Tag")||column.columnNameLower?ends_with("Type")||column.columnNameLower?ends_with("stats") >
                                 ,formatter:function(cellvalue, options, rowObject){
 									var jsonEnumArray = <%=${className}Vo.${column.constantName}_JSON_MAP %>;
 									if(jsonEnumArray&&jsonEnumArray.length>0){
@@ -100,7 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     						            });
     						    		$.ajax({
     						    			url: getRoot() + "manage/${classNameLowerCase}/doedit.zul",
-    						    			data: framefrom.$("#game${className}Form").serialize(),
+    						    			data: framefrom.$("#${className}Form").serialize(),
     						    			type: "POST",
     						    			success: function(data) {
     						    				parent.layer.close(loadIndex);
@@ -166,9 +169,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     						    	//var data = framefrom.$("#gameAnnouncementForm").serialize();
     						    	if (framefrom.valid())
     						    	{
-    						    		$.ajax({
+    						    		var formJson = framefrom.$("#${className}Form").serialize();
+										$.ajax({
     						    			url: getRoot() + "manage/${classNameLowerCase}/doedit.zul",
-    						    			data: framefrom.$("#game${className}Form").serialize(),
+    						    			data: formJson,
     						    			type: "POST",
     						    			success: function(data) {
     						    			//	var json = eval("("+data+")");
@@ -272,6 +276,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 					</#if>
 				</#list>
+
+				//隐藏通用参数
+				$("#updateTimeBegin, #delTag, #createTimeBegin, #id").parent().hide();
 	    	});
 	    	page = 1;
 	    	//刷新页面

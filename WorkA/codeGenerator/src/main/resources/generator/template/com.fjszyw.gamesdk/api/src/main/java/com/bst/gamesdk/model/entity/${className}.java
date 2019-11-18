@@ -5,7 +5,7 @@
 <#assign classNameFirstLower = className?uncap_first>
 <#assign classNameLowerCase = className?lower_case>
 <#assign pkJavaType = table.idColumn.javaType>
-package ${basepackage}.manage.pojo;
+package com.bst.gamesdk.model.entity;
 
 import javax.validation.constraints.*;
 import org.hibernate.validator.constraints.*;
@@ -19,7 +19,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 /**
 <#include "/java_description.include">
  */
-public class ${className}  implements java.io.Serializable{
+public class ${className}  extends Entity implements java.io.Serializable{
 	private static final long serialVersionUID = 5454155825314635342L;
 
 	//可以直接使用: @Length(max=50,message="用户名长度不能大于50")显示错误消息
@@ -38,6 +38,10 @@ public class ${className}  implements java.io.Serializable{
 <@generateJavaOneToMany/>
 <@generateJavaManyToOne/>
 
+    @Override
+    public Serializable id() {
+        return this.id;
+    }
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
 	}

@@ -38,7 +38,12 @@ public interface ${className}Service {
 	 * 分页查询: ${className}
 	 **/      
 	public Page findPage(${className}Query query);
-	
+	/**
+	 * 批量删除
+	 */
+	public void delBatch(Long[] ids);
+
+
 <#list table.columns as column>
 	<#if column.unique && !column.pk>
 	public ${className} getBy${column.columnName}(${column.javaType} param);

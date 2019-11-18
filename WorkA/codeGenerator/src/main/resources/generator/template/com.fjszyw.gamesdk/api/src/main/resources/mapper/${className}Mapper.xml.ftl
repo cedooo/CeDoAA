@@ -46,14 +46,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
     
 	<update id="update" >
     <![CDATA[
-        UPDATE ${table.sqlName}
-		<set>
-	        <#list table.notPkColumns as column>
-			<if test="@Ognl@isNotEmpty(${column.columnNameFirstLower})">
-				${column.sqlName} = <@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
-			</if>
-			</#list>
-		</set>
+        UPDATE ${table.sqlName} SET
+	        <#list table.notPkColumns as column>${column.sqlName} = <@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if> </#list>
         WHERE 
         	<#list table.compositeIdColumns as column>${column.sqlName} = <@mapperEl column.columnNameLower/> <#if column_has_next> AND </#if> </#list>	        
     ]]>
@@ -67,17 +61,6 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		</#list>
     ]]>
     </delete>
-
-	<update id="deleteWithTag">
-		<![CDATA[
-		UPDATE ${table.sqlName}
-		SET DEL_TAG = '1'
-		WHERE
-		<#list table.compositeIdColumns as column>
-			${column.sqlName} = <@mapperEl 'id'/> <#if column_has_next> AND </#if>
-		</#list>
-		]]>
-	</update>
     
     <select id="getById" resultMap="RM${className}">
 		SELECT <include refid="<@namespace/>columns" />
@@ -92,8 +75,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	
 	<sql id="<@namespace/>findPageWhere">
 		<!-- ognl访问静态方法的表达式 为@class@method(args),以下为调用rapid中的Ognl.isNotEmpty()方法,还有其它方法如isNotBlank()可以使用，具体请查看Ognl类 -->
-		<where>
-			DEL_TAG = '0'
+		<where>	      				
 	       <#list table.columns as column>
 	       <#if column.isDateTimeColumn>
 	       <if test="@Ognl@isNotEmpty(${column.columnNameFirstLower}Begin)">
