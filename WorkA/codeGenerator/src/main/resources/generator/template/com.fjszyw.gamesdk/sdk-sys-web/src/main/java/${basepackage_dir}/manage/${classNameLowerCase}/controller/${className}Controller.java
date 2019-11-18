@@ -1,11 +1,15 @@
 <#include "/custom.include">
 <#include "/java_copyright.include">
+<#include "/custom.include">
 <#assign className = table.className>
 <#assign classNameFirstLower = className?uncap_first>
 <#assign classNameLowerCase = className?lower_case>
 <#assign pkJavaType = table.idColumn.javaType>
 package ${basepackage}.manage.${classNameLowerCase}.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +21,7 @@ import com.bst.sdk.common.util.CodeUtil;
 import com.bst.sdk.common.util.ReturnUtil;
 import com.bst.sdk.util.BindingResultToString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -25,6 +30,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import com.bst.sdk.common.json.JsonlibUtils;
 import com.bst.sdk.common.util.Page;
@@ -43,6 +50,24 @@ public class ${className}Controller extends BaseController {
 	
 	@Autowired
 	private ${className}Service ${classNameFirstLower}Service;
+
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder){
+		DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dateFormat.setLenient(true);
+		DateFormat dateFormat2= new SimpleDateFormat("yyyy-MM-dd");
+		dateFormat2.setLenient(true);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+		<#list table.columns as column>
+		<#if column.isDateTimeColumn && !column.contains(timeRangeTag)>
+		binder.registerCustomEditor(Date.class, "${column.columnNameLower}Begin", new CustomDateEditor(dateFormat2, true));
+		binder.registerCustomEditor(Date.class, "${column.columnNameLower}End", new CustomDateEditor(dateFormat2, true));
+		</#if>
+		</#list>
+	}
+
+
 	@RequestMapping({ "/list" })
 	/**
 	 * 列表

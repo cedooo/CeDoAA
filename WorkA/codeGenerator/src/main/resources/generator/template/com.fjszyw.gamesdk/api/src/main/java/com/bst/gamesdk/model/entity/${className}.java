@@ -42,10 +42,11 @@ public class ${className}  extends Entity implements java.io.Serializable{
     public Serializable id() {
         return this.id;
     }
+	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
 	}
-	
+	@Override
 	public int hashCode() {
 		return new HashCodeBuilder()
 		<#list table.pkColumns as column>
@@ -53,7 +54,7 @@ public class ${className}  extends Entity implements java.io.Serializable{
 		</#list>
 			.toHashCode();
 	}
-	
+	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof ${className} == false) return false;
 		if(this == obj) return true;

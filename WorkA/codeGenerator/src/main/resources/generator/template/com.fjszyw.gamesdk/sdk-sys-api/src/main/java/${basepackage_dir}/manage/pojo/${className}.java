@@ -12,7 +12,6 @@ import org.hibernate.validator.constraints.*;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 
 <#include "/java_imports.include">
 
@@ -38,10 +37,12 @@ public class ${className}  implements java.io.Serializable{
 <@generateJavaOneToMany/>
 <@generateJavaManyToOne/>
 
+	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
 	}
-	
+
+	@Override
 	public int hashCode() {
 		return new HashCodeBuilder()
 		<#list table.pkColumns as column>
@@ -49,10 +50,15 @@ public class ${className}  implements java.io.Serializable{
 		</#list>
 			.toHashCode();
 	}
-	
+
+	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof ${className} == false) return false;
-		if(this == obj) return true;
+		if(obj instanceof ${className} == false){
+			return false;
+		}
+		if(this == obj) {
+			return true;
+		}
 		${className} other = (${className})obj;
 		return new EqualsBuilder()
 			<#list table.pkColumns as column>

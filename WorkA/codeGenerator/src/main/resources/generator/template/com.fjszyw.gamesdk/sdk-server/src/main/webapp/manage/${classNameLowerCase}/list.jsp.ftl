@@ -288,7 +288,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    			page = $("#table_list").jqGrid("getGridParam","page");
 	    		}
 
-    			var postDatas = $("#searchForm").serializeObject();
+    			var postDatas = $("#searchForm").serialize();
 
     			$("#table_list").jqGrid("setGridParam",{
     				url: ajaxURL, 

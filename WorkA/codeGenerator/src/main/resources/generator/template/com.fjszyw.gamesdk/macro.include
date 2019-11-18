@@ -32,7 +32,8 @@
     <#assign res = alias?matches(r"(\w+)\((.+?)\)")>
     public static String ${constantName}_JSON_MAP = "[" +
     <#list res as m>
-     "{\"key\": \"${m?groups[1]}\",\"value\":\"${m?groups[2]}\"}<#if m?has_next>,</#if>"  + //${m} ${m?groups[1]} - ${m?groups[2]}
+     /*${m} ${m?groups[1]} - ${m?groups[2]}*/
+     "{\"key\": \"${m?groups[1]}\",\"value\":\"${m?groups[2]}\"}<#if m?has_next>,</#if>"  +
     </#list>
     "]";
 </#macro>

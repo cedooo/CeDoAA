@@ -1,6 +1,7 @@
 <#include "/macro.include"/>
 <#include "/java_copyright.include">
-<#assign className = table.className>   
+<#include "/custom.include">
+<#assign className = table.className>
 <#assign classNameLower = className?uncap_first>
 <#assign classNameFirstLower = className?uncap_first>
 <#assign classNameLowerCase = className?lower_case>
@@ -13,6 +14,9 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import com.bst.sdk.common.util.Page;
 
 import java.io.Serializable;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Max;
 
 <#include "/java_imports.include">
 
@@ -35,7 +39,7 @@ public class ${className}Query extends Page implements Serializable {
 
 	<#list table.columns as column>
 	/** ${column.columnAlias} */
-	<#if column.isDateTimeColumn && !column.contains("begin,start,end")>
+	<#if column.isDateTimeColumn && !column.contains(timeRangeTag)>
 	private ${column.javaType} ${column.columnNameLower}Begin;
 	private ${column.javaType} ${column.columnNameLower}End;
 	<#else>
@@ -48,7 +52,7 @@ public class ${className}Query extends Page implements Serializable {
 
 <#macro generateProperties>
 	<#list table.columns as column>
-	<#if column.isDateTimeColumn && !column.contains("begin,start,end")>
+	<#if column.isDateTimeColumn && !column.contains(timeRangeTag)>
 	public ${column.javaType} get${column.columnName}Begin() {
 		return this.${column.columnNameLower}Begin;
 	}

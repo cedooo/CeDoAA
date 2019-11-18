@@ -45,19 +45,17 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</insert>
     
 	<update id="update" >
-    <![CDATA[
         UPDATE ${table.sqlName}
 		<set>
 	        <#list table.notPkColumns as column>
 			<if test="@Ognl@isNotEmpty(${column.columnNameFirstLower})">
-				${column.sqlName} = <@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if>
+				${column.sqlName} = <@mapperEl column.columnNameFirstLower/><#if column_has_next>,</#if>
 			</if>
 			</#list>
 		</set>
         WHERE 
         	<#list table.compositeIdColumns as column>${column.sqlName} = <@mapperEl column.columnNameLower/> <#if column_has_next> AND </#if> </#list>	        
-    ]]>
-	</update>
+    </update>
 
     <delete id="delete">
     <![CDATA[
@@ -100,11 +98,15 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 				AND ${column.sqlName} >= <@mapperEl column.columnNameFirstLower+"Begin"/>
 		   </if>
 		   <if test="@Ognl@isNotEmpty(${column.columnNameFirstLower}End)">
-				AND ${column.sqlName} &lt;= <@mapperEl column.columnNameFirstLower+"End"/>
+				AND <@mapperEl column.columnNameFirstLower+"End"/> >= ${column.sqlName}
 		   </if>
-	       <#else>
+	       <#elseif column.columnNameLower?ends_with("Tag")||column.columnNameLower?ends_with("Type")||column.columnNameLower?ends_with("stats")||column.columnNameLower?ends_with("Id")>
 	       <if test="@Ognl@isNotEmpty(${column.columnNameFirstLower})">
 				AND ${column.sqlName} = <@mapperEl column.columnNameFirstLower/>
+			</if>
+	       <#else>
+	       <if test="@Ognl@isNotEmpty(${column.columnNameFirstLower})">
+				AND ${column.sqlName} LIKE CONCAT('%',<@mapperEl column.columnNameFirstLower/>,'%')
 			</if>
 	       </#if>
 	       </#list>			

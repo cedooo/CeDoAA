@@ -19,8 +19,10 @@ public class ${className}Vo extends ${className}  implements java.io.Serializabl
 
 	private static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-	//alias
-	public static final String TABLE_ALIAS = <#list table.columns as column><#if column.columnNameLower == 'id'>"${column.columnAlias?substring(0,column.columnAlias?index_of('ID'))}"</#if></#list>;//"${table.tableAlias}";
+	/**
+	 * alias "${table.tableAlias}";
+	 */
+	public static final String TABLE_ALIAS = <#list table.columns as column><#if column.columnNameLower == 'id'>"${column.columnAlias?substring(0,column.columnAlias?index_of('ID'))}"</#if></#list>;
 
 	<#list table.columns as column>
 	<#if column.columnAlias?matches('.+:.*')>
@@ -30,8 +32,10 @@ public class ${className}Vo extends ${className}  implements java.io.Serializabl
 	public static final String ALIAS_${column.constantName} = "${column.columnAlias}";
 	</#if>
 	</#list>
-	
-	//date formats
+
+	/**
+	 * date formats
+	 */
 	<#list table.columns as column>
 	<#if column.isDateTimeColumn>
 	public static final String FORMAT_${column.constantName} = DATE_FORMAT;
