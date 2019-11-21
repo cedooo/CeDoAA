@@ -8,14 +8,13 @@
 package com.bst.gamesdk.model.entity;
 
 import javax.validation.constraints.*;
+import com.bst.gamesdk.model.entity.base.Entity;
 import org.hibernate.validator.constraints.*;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 
-<#include "/java_imports.include">
-
+import java.io.Serializable;
 /**
 <#include "/java_description.include">
  */
@@ -56,8 +55,12 @@ public class ${className}  extends Entity implements java.io.Serializable{
 	}
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof ${className} == false) return false;
-		if(this == obj) return true;
+		if(obj instanceof ${className} == false){
+			return false;
+		}
+		if(this == obj) {
+			return true;
+		}
 		${className} other = (${className})obj;
 		return new EqualsBuilder()
 			<#list table.pkColumns as column>

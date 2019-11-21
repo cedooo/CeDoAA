@@ -6,16 +6,17 @@
 <#assign classNameFirstLower = className?uncap_first>
 <#assign classNameLowerCase = className?lower_case>
 <#assign pkJavaType = table.idColumn.javaType>
-package ${basepackage}.manage.mapper;
+package ${sdkbasepackage}.dao;
 
 import java.util.List;
-import ${basepackage}.manage.pojo.${className};
-import ${basepackage}.manage.query.${className}Query;
+import ${sdkbasepackage}.model.entity.${className};
+import ${sdkbasepackage}.dto.${className}Query;
+import com.bst.gamesdk.dao.base.BaseMapper;
 
 /**
  <#include "/java_description.include">
  */
-public interface ${className}Mapper {
+public interface ${className}Mapper extends BaseMapper<${className}>{
 
 	/**
 	 * 插入新的记录

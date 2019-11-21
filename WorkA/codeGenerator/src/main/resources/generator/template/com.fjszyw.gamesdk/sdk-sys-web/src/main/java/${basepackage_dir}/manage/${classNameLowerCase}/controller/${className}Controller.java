@@ -51,7 +51,6 @@ public class ${className}Controller extends BaseController {
 	@Autowired
 	private ${className}Service ${classNameFirstLower}Service;
 
-
 	@InitBinder
 	public void initBinder(WebDataBinder binder){
 		DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -66,12 +65,10 @@ public class ${className}Controller extends BaseController {
 		</#if>
 		</#list>
 	}
-
-
-	@RequestMapping({ "/list" })
 	/**
 	 * 列表
 	 */
+    @RequestMapping({ "/list" })
 	public String list(HttpServletRequest request, HttpServletResponse response) {
 		return "list";
 	}
@@ -90,8 +87,6 @@ public class ${className}Controller extends BaseController {
 		model.addAttribute("obj", msg);
 		return "edit";
 	}
-
-
 	/**
 	 * 编辑
 	 */
@@ -154,4 +149,5 @@ public class ${className}Controller extends BaseController {
 		}
 		return "1";
 	}
+
 }

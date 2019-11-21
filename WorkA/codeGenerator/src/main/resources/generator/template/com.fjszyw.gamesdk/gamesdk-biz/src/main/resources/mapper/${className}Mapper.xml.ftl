@@ -11,9 +11,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 <#macro namespace>${className}</#macro>
 
 <!-- 不使用namespace的话sql搜索定位会比较方便 -->
-<mapper namespace="${basepackage}.manage.mapper.${className}Mapper">
+<mapper namespace="com.bst.gamesdk.dao.${className}Mapper">
 
-	<resultMap id="RM${className}" type="${basepackage}.manage.pojo.${className}">
+	<resultMap id="RM${className}" type="com.bst.gamesdk.model.entity.${className}">
         <#list table.columns as column>
         <result property="${column.columnNameLower}" column="${column.sqlName}"/>
 		</#list>

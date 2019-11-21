@@ -77,11 +77,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<#if column.isDateTimeColumn>
 						<input type="text" class="form-control layer-date" id="${column.columnNameLower}"
 							value="<fmt:formatDate value="<@jspEL "obj." + column.columnNameLower></@jspEL>" pattern="yyyy-MM-dd HH:mm:ss"/>"
-							readonly    name="${column.columnNameLower}">
+							readonly name="${column.columnNameLower}">
 					<#elseif column.columnNameLower?ends_with("Tag")||column.columnNameLower?ends_with("Type")||column.columnNameLower?ends_with("stats")>
 						<select class="form-control chosen-select" id="${column.columnNameLower}" name="${column.columnNameLower}" style="width: 150px;"></select>
 					<#else>
-						<input type="text" class="form-control" id="${column.columnNameLower}" name="${column.columnNameLower}"  value="<@jspEL "obj."+column.columnNameLower></@jspEL>" />
+						<input type="text" maxlength="${column.size}" class="form-control" id="${column.columnNameLower}" name="${column.columnNameLower}"  value="<@jspEL "obj."+column.columnNameLower></@jspEL>" />
 					</#if>
 				</div>
 			</div>

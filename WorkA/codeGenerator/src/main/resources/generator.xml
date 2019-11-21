@@ -8,6 +8,7 @@
 	</comment>
 	
 	<entry key="basepackage">com.bst.sdk</entry>
+	<entry key="sdkbasepackage">com.bst.gamesdk</entry>
 	
 	<!-- jsp namespace: web/${namespace}/${className}/list.jsp -->
 	<entry key="namespace">pages</entry>
