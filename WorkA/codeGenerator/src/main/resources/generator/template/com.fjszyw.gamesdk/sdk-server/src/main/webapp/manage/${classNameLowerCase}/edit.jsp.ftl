@@ -45,8 +45,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#searchForm select[name='${column.columnNameLower}']").append(
 					"<option value=''>全部</option>");
 			for (var i = 0; i < jsonEnumArray.length; i++) {
-				$("#${className}Form select[name='${column.columnNameLower}']").append(
-						"<option value='" + jsonEnumArray[i].key +  "'>" + jsonEnumArray[i].value +  "</option>")
+				if('<@jspEL "obj." + column.columnNameLower></@jspEL>'==jsonEnumArray[i].key) {
+					$("#${className}Form select[name='${column.columnNameLower}']").append(
+							"<option value='" + jsonEnumArray[i].key + "'>" + jsonEnumArray[i].value + "</option>");
+				}else {
+					$("#${className}Form select[name='${column.columnNameLower}']").append(
+							"<option value='" + jsonEnumArray[i].key + "'>" + jsonEnumArray[i].value + "</option>");
+				}
 			}
 		}
 		</#if>

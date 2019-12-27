@@ -5,7 +5,7 @@ import cn.org.rapid_framework.generator.GeneratorFacade;
 /**
  * @author cedoo cedoo(@)qq.com
  */
-public class CodeGenerator {
+public class CodeGeneratorSzyw {
 
     public static void main(String[] args) throws Exception {
 
@@ -16,23 +16,18 @@ public class CodeGenerator {
         //删除生成器的输出目录//
         g.deleteOutRootDir();
         //通过数据库表生成文件
-        /**
-         *
-         "tbl_sdk_device_whitelist",
-         "tbl_sdk_game_certification",
-         "tbl_sdk_game_customer_service_qa",
-         "tbl_sdk_game_notice",
-         "tbl_sdk_game_platinum_bag",
-         "tbl_sdk_game_platinum_seria_no"
-         */
-        g.generateByTable(
+
+    /*    g.generateByTable(
                 "tbl_sdk_device_whitelist",
                 "tbl_sdk_game_certification",
                 "tbl_sdk_game_customer_service_qa",
                 "tbl_sdk_game_notice",
-                "tbl_sdk_game_platinum_bag",
-                "tbl_sdk_game_platinum_seria_no",
-                "tbl_sdk_game_platinum_getter");
+                "tbl_sdk_game_gift",
+                "tbl_sdk_game_gift_seria_no",
+                "tbl_sdk_game_gift_getter");*/
+
+        g.generateByTable(
+                "tbl_sdk_device_whitelist");
 
 //        自动搜索数据库中的所有表并生成文件,template为模板的根目录
 //        g.generateByAllTable();

@@ -67,3 +67,6 @@
     }
     </#list>
 </#macro>
+
+<#-- 自定义本地实体名称 -->
+<#macro tbAlias><#list table.columns as column><#if column.columnNameLower == 'id'>${column.columnAlias?substring(0,column.columnAlias?index_of('ID'))}</#if></#list></#macro>
