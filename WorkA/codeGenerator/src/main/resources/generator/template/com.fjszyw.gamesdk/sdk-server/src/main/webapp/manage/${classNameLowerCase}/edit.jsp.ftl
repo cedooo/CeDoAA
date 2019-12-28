@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			for (var i = 0; i < jsonEnumArray.length; i++) {
 				if('<@jspEL "obj." + column.columnNameLower></@jspEL>'==jsonEnumArray[i].key) {
 					$("#${className}Form select[name='${column.columnNameLower}']").append(
-							"<option value='" + jsonEnumArray[i].key + "'>" + jsonEnumArray[i].value + "</option>");
+							"<option selected='selected' value='" + jsonEnumArray[i].key + "'>" + jsonEnumArray[i].value + "</option>");
 				}else {
 					$("#${className}Form select[name='${column.columnNameLower}']").append(
 							"<option value='" + jsonEnumArray[i].key + "'>" + jsonEnumArray[i].value + "</option>");
