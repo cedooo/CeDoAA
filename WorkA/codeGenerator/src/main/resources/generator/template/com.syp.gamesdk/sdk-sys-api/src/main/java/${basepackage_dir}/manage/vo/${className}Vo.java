@@ -17,12 +17,14 @@ import com.bst.sdk.common.util.DateUtil;
 public class ${className}Vo extends ${className}  implements java.io.Serializable{
 	private static final long serialVersionUID = 5454155825314635342L;
 
-	private static String DATE_FORMAT = \"yyyy-MM-dd HH:mm:ss";
+	private static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-	/**
-	 * alias "${table.tableAlias}";
-	 */
-	public static final String TABLE_ALIAS = <#list table.columns as column><#if column.columnNameLower == 'id'>"${column.columnAlias?substring(0,column.columnAlias?index_of('ID'))}"</#if></#list>;
+	//alias
+	<#if table.idColumn.columnNameLower=='id'>
+	public static final String TABLE_ALIAS = <#list table.columns as column><#if column.columnNameLower == 'id'>"${column.columnAlias?substring(0,column.columnAlias?index_of('ID'))}"</#if></#list>;//"${table.tableAlias}";
+	<#else>
+	public static final String TABLE_ALIAS = "";
+	</#if>
 
 	<#list table.columns as column>
 	<#if column.columnAlias?matches('.+:.*')>
@@ -32,10 +34,8 @@ public class ${className}Vo extends ${className}  implements java.io.Serializabl
 	public static final String ALIAS_${column.constantName} = "${column.columnAlias}";
 	</#if>
 	</#list>
-
-	/**
-	 * date formats
-	 */
+	
+	//date formats
 	<#list table.columns as column>
 	<#if column.isDateTimeColumn>
 	public static final String FORMAT_${column.constantName} = DATE_FORMAT;

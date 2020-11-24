@@ -1,0 +1,68 @@
+<#-- 本文件包含一些公共的函数,本文件会被其它模板自动include -->
+
+<#assign dollar = '$'> 
+
+<#-- 将value变成jsp el表达式,主要由于FreeMarker生成表达式不方便 -->
+<#macro jspEl value>${r"${"}${value}}</#macro>
+
+<#-- 生成java构造函数 -->
+<#macro generateConstructor constructor>
+	public ${constructor}(){
+	}
+
+	public ${constructor}(
+	<#list table.compositeIdColumns as column>
+		${column.javaType} ${column.columnNameLower}<#if column_has_next>,</#if>
+	</#list>		
+	){
+	<#list table.compositeIdColumns as column>
+		<#if column.pk>
+		this.${column.columnNameLower} = ${column.columnNameLower};
+		</#if>
+	</#list>	
+	}
+
+</#macro>
+
+
+
+
+<#-- 生成状态类型变量的枚举类型 -->
+<#macro generateStatusEnum constantName alias>
+    <#assign res = alias?matches(r"(\w+)\((.+?)\)")>
+    public static String ${constantName}_JSON_MAP = "[" +
+    <#list res as m>
+     "{\"key\": \"${m?groups[1]}\",\"value\":\"${m?groups[2]}\"}<#if m?has_next>,</#if>"  + //${m} ${m?groups[1]} - ${m?groups[2]}
+    </#list>
+    "]";
+</#macro>
+
+
+<#-- 生成java视图列函数 -->
+<#macro generateJavaVoColumns>
+	<#list table.columns as column>
+		<#if column.isDateTimeColumn>
+	private String ${column.columnName?uncap_first}String;
+	public String get${column.columnName}String() {
+		return DateUtil.datetoString(get${column.columnName}(), FORMAT_${column.constantName});
+	}
+	public void set${column.columnName}String(String value) {
+		set${column.columnName}(DateUtil.stringtoDate(value, FORMAT_${column.constantName}));
+	}
+
+		</#if>
+	</#list>
+</#macro>
+
+<#-- 生成java持久化成员变量以及getter setter函数 -->
+<#macro generateJavaPoColumns>
+	<#list table.columns as column>
+    public void set${column.columnName}(${column.javaType} value) {
+        this.${column.columnNameLower} = value;
+    }
+
+    public ${column.javaType} get${column.columnName}() {
+        return this.${column.columnNameLower};
+    }
+    </#list>
+</#macro>

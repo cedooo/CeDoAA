@@ -1,0 +1,3 @@
+import ${basepackage}.manage.mapper.*;
+import ${basepackage}.manage.pojo.*;
+import ${basepackage}.manage.vo.*;
