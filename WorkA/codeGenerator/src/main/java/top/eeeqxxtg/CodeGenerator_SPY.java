@@ -24,8 +24,11 @@ public class CodeGenerator_SPY {
          "tbl_sdk_game_platinum_seria_no"
          */
          g.generateByTable(
-                 "tbl_sdk_game_red_envelope",
-                 "tbl_sdk_game_user_weixin"
+                 "tbl_sdk_game_red_envelope"
+                 ,"tbl_sdk_game_user_weixin"
+                 ,"tbl_sdk_game_redenvelope_groups"
+                 ,"tbl_sdk_game_withdraw_groups"
+                 ,"tbl_sdk_game_redenvelope_withdraw_conf"
                  ,"tbl_sdk_game_red_envelope_rule", "tbl_sdk_game_red_envelope_log"
                 ,"tbl_sdk_game_withdraw_log", "tbl_sdk_game_withdraw_rule", "tbl_sdk_game_withdraw_condition"
                  ,"tbl_sdk_game_withdraw_conf", "tbl_sdk_game_user_wallet", "tbl_sdk_game_red_envelope_log"

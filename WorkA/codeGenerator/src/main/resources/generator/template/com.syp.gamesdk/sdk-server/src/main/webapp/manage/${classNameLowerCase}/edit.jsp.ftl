@@ -5,6 +5,7 @@
 <#assign classNameLowerCase = className?lower_case>
 <#assign classNameLower = className?lower_case>
 <#assign pkJavaType = table.idColumn.javaType>
+<#assign seqHideField = ["updateTime", "updatedTime", "updatedBy", "delTag", "createTime", "createdBy", "createdTime", "id"]>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ page import="${basepackage}.manage.vo.${className}Vo" %>
 <%@ taglib prefix="c" uri="/c" %>
@@ -27,7 +28,7 @@
 	<jsp:include page="/common/tail.jsp"></jsp:include>
 	<script type="text/javascript">
 	$(function() {
-
+        //$("#updateTime, #updatedTime, #updatedBy, #delTag, #createTime, #createdBy, #createdTime, #id").parents(".form-group").hide();
     <#list table.columns as column>
         <#if column.isDateTimeColumn>
 		//初始化时间
@@ -60,7 +61,6 @@
 		</#if>
     </#list>
 
-		$("#updateTime, #updatedTime, #updatedBy, #delTag, #createTime, #createdBy, #createdTime, #id").parents(".form-group").hide();
 	});
 	//保存验证
 	function valid() 
@@ -79,7 +79,7 @@
 			<br>
 			<#list table.columns as column>
             	<#if !column.htmlHidden>
-			<div class="form-group">
+			<div class="form-group" <#if seqHideField?seq_contains(column.columnNameLower)>style="display:none"</#if>>
 				<label class="col-sm-2 control-label"><%=${className}Vo.ALIAS_${column.constantName} %>：</label>
 				<div class="col-md-3 col-sm-3 no-padding">
 
@@ -90,6 +90,13 @@
                 <#else>
 					<input type="text" maxlength="19" class="form-control" id="${column.columnNameLower}" name="${column.columnNameLower}"  value="<@jspEl 'obj.'+column.columnNameLower />" />
 				</#if>
+				</div>
+			</div>
+			    <#elseif "java.lang.String"==column.javaType>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><%=${className}Vo.ALIAS_${column.constantName} %>：</label>
+            	<div class="col-md-3 col-sm-3 no-padding">
+					<input type="text" maxlength="19" class="form-control" id="${column.columnNameLower}" name="${column.columnNameLower}"  value="<@jspEl 'obj.'+column.columnNameLower />" />
 				</div>
 			</div>
 			    <#else>

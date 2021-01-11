@@ -27,12 +27,12 @@ public interface ${className}Service {
 	/** 
 	 * 删除${className}
 	 **/
-    void removeById(${table.idColumn.javaType} id);
+    void removeByKey(${table.idColumn.javaType} key);
     
 	/** 
 	 * 根据ID得到${className}
 	 **/    
-    ${className} getById(${table.idColumn.javaType} id);
+    ${className} getByKey(${table.idColumn.javaType} key);
     
 	/** 
 	 * 分页查询: ${className}
@@ -43,6 +43,15 @@ public interface ${className}Service {
 	 * 批量删除
 	 */
 	void delBatch(${table.idColumn.javaType}[] ids);
+
+
+<#if 'java.lang.Long'==table.idColumn.javaType>
+<#elseif 'java.lang.String'==table.idColumn.javaType>
+	/**
+	 * 创建或者更新${className}
+	 **/
+	${className} insertOrUpdate(${className} ${classNameLower});
+</#if>
 	
 <#list table.columns as column>
 	<#if column.unique && !column.pk>

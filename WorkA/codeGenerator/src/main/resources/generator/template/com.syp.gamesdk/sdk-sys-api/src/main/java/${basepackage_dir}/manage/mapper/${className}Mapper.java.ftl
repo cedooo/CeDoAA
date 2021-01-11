@@ -36,7 +36,7 @@ public interface ${className}Mapper {
 	/**
 	 * 根据ID查询记录
 	 */
-	${className} getById(${table.idColumn.javaType} id);
+	${className} getByKey(${table.idColumn.javaType} key);
 	/**
 	 * 查询分页总数
 	 */
@@ -45,5 +45,13 @@ public interface ${className}Mapper {
 	 * 查询分页数据
 	 */
 	List<${className}> findPage(${className}Query ${classNameFirstLower}Query);
+
+<#if 'java.lang.Long'==table.idColumn.javaType>
+<#elseif 'java.lang.String'==table.idColumn.javaType>
+	/**
+	 * 插入或者更新的记录
+	 */
+	int insertOrUpdate(${className} ${classNameFirstLower});
+</#if>
 
 }

@@ -35,22 +35,41 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         <#list table.columns as column> <@mapperEl column.columnNameFirstLower/><#if column_has_next>,</#if></#list>        
         )
     ]]>
-		<!--	
-			oracle: order="BEFORE" SELECT sequenceName.nextval AS ID FROM DUAL 
-			DB2: order="BEFORE"" values nextval for sequenceName
-		<selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="userId">
-			SELECT sequenceName.nextval AS ID FROM DUAL 
-        </selectKey>
-		-->
 	</insert>
-    
+
+<#if 'java.lang.Long'==table.idColumn.javaType>
+<#elseif 'java.lang.String'==table.idColumn.javaType>
+    <insert id="insertOrUpdate" useGeneratedKeys="true" keyProperty="${table.idColumn.columnNameFirstLower}">
+        INSERT INTO ${table.sqlName} (
+        <#list table.columns as column> ${column.sqlName}<#if column_has_next>,</#if></#list>
+        ) VALUES (
+        <#list table.columns as column> <@mapperEl column.columnNameFirstLower/><#if column_has_next>,</#if></#list>
+        )
+        ON DUPLICATE KEY
+        UPDATE
+        <trim suffixOverrides=",">
+        <#list table.notPkColumns as column>
+        <#if column.columnNameFirstLower!='createdTime'>
+            <if test="@Ognl@isNotEmpty(${column.columnNameFirstLower})">
+            ${column.sqlName} = <@mapperEl column.columnNameFirstLower/><#if column_has_next>,</#if>
+            </if>
+        </#if>
+        </#list>
+        </trim>
+    </insert>
+</#if>
+
 	<update id="update" >
-    <![CDATA[
-        UPDATE ${table.sqlName} SET
-	        <#list table.notPkColumns as column>${column.sqlName} = <@mapperEl column.columnNameFirstLower/> <#if column_has_next>,</#if> </#list>
+        UPDATE ${table.sqlName}
+        <set>
+	    <#list table.notPkColumns as column>
+			<if test="@Ognl@isNotEmpty(${column.columnNameFirstLower})">
+	        ${column.sqlName} = <@mapperEl column.columnNameFirstLower/><#if column_has_next>,</#if>
+			</if>
+	    </#list>
+	    </set>
         WHERE 
-        	<#list table.compositeIdColumns as column>${column.sqlName} = <@mapperEl column.columnNameLower/> <#if column_has_next> AND </#if> </#list>	        
-    ]]>
+        	<#list table.compositeIdColumns as column>${column.sqlName} = <@mapperEl column.columnNameLower/> <#if column_has_next> AND </#if> </#list>
 	</update>
 
     <delete id="delete">
@@ -68,17 +87,17 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		UPDATE ${table.sqlName}
 		SET DEL_TAG = '1'
 		WHERE
-			ID =  <@mapperEl 'id'/>
+			${table.idColumn.sqlName} = <@mapperEl 'id'/>
 		]]>
 	</update>
     
-    <select id="getById" resultMap="RM${className}">
+    <select id="getByKey" resultMap="RM${className}">
 		SELECT <include refid="<@namespace/>columns" />
 	    <![CDATA[
 		    FROM ${table.sqlName} 
 	        WHERE 
 				<#list table.compositeIdColumns as column>
-		        ${column.sqlName} = <@mapperEl 'id'/> <#if column_has_next> AND </#if>
+		        ${column.sqlName} = <@mapperEl column.columnNameFirstLower/> <#if column_has_next> AND </#if>
 		        </#list>    
 	    ]]>
 	</select>

@@ -25,7 +25,7 @@ public class ${className} extends Entity{
 
 	@Override
 	public Serializable id() {
-		return id;
+		return ${table.idColumn.columnNameFirstLower};
 	}
 
 	//可以直接使用: @Length(max=50,message="用户名长度不能大于50")显示错误消息

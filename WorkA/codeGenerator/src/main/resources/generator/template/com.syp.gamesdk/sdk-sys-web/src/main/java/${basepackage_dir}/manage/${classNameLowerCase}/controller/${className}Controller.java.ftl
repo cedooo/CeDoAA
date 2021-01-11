@@ -33,7 +33,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import com.bst.sdk.common.json.JsonlibUtils;
-import com.bst.sdk.sys.controller.BaseController;
+import com.bst.sdk.controllers.sys.BaseController;
 import org.springframework.util.Assert;
 
 import ${basepackage}.manage.${classNameLowerCase}.service.${className}Service;
@@ -87,11 +87,11 @@ public class ${className}Controller extends BaseController {
         <#list table.compositeIdColumns as column>
         <#if 'java.lang.Long'==column.javaType>
         if (${table.idColumn.columnNameLower} != null&&${table.idColumn.columnNameLower}!= 0) {
-            msg = ${classNameFirstLower}Service.getById(${table.idColumn.columnNameLower});
+            msg = ${classNameFirstLower}Service.getByKey(${table.idColumn.columnNameLower});
         }
         <#elseif 'java.lang.String'==column.javaType>
         if (${table.idColumn.columnNameLower} != null) {
-            msg = ${classNameFirstLower}Service.getById(${table.idColumn.columnNameLower});
+            msg = ${classNameFirstLower}Service.getByKey(${table.idColumn.columnNameLower});
         }
         </#if>
         </#list>
@@ -115,11 +115,15 @@ public class ${className}Controller extends BaseController {
             }
             ${table.idColumn.javaType} ${table.idColumn.columnNameLower} = ${classNameFirstLower}.get${table.idColumn.columnName}();
             ${className} ${classNameFirstLower}Edited = null;
+        <#if 'java.lang.Long'==table.idColumn.javaType>
             if(${table.idColumn.columnNameLower}==null){
                 ${classNameFirstLower}Edited = ${classNameFirstLower}Service.save(${classNameFirstLower});
             }else{
                 ${classNameFirstLower}Edited = ${classNameFirstLower}Service.update(${classNameFirstLower});
             }
+        <#elseif 'java.lang.String'==table.idColumn.javaType>
+            ${classNameFirstLower}Edited = ${classNameFirstLower}Service.insertOrUpdate(${classNameFirstLower});
+        </#if>
             if(${classNameFirstLower}Edited!=null){
                 ${table.idColumn.javaType}  newId = ${classNameFirstLower}Edited.get${table.idColumn.columnName}();
                 msgMap.put("id", newId);

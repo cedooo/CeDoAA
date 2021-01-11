@@ -58,15 +58,15 @@ public class ${className}ServiceImpl implements ${className}Service {
 	/** 
 	 * 删除${className}
 	 **/
-    public void removeById(${table.idColumn.javaType} id) {
-        this.${classNameLowerFirst}Mapper.delete(id);
+    public void removeByKey(${table.idColumn.javaType} key) {
+        this.${classNameLowerFirst}Mapper.delete(key);
     }
     
 	/** 
 	 * 根据ID得到${className}
 	 **/    
-    public ${className} getById(${table.idColumn.javaType} id) {
-        return this.${classNameLowerFirst}Mapper.getById(id);
+    public ${className} getByKey(${table.idColumn.javaType} key) {
+        return this.${classNameLowerFirst}Mapper.getByKey(key);
     }
     
 	/** 
@@ -87,19 +87,30 @@ public class ${className}ServiceImpl implements ${className}Service {
 
 	@Override
 	@Transactional()
-	public void delBatch(${table.idColumn.javaType}[] ids) {
-		for(${table.idColumn.javaType} id : ids) {
-			${classNameLowerFirst}Mapper.deleteWithTag(id);
+	public void delBatch(${table.idColumn.javaType}[] keys) {
+		for(${table.idColumn.javaType} key : keys) {
+			${classNameLowerFirst}Mapper.deleteWithTag(key);
 		}
 	}
-	
+
+<#if 'java.lang.Long'==table.idColumn.javaType>
+<#elseif 'java.lang.String'==table.idColumn.javaType>
+    @Override
+    public ${className} insertOrUpdate(${className} ${classNameLowerFirst}) {
+        Assert.notNull(${classNameLowerFirst},"'${classNameLowerFirst}' must be not null");
+        initDefaultValuesForCreate(${classNameLowerFirst});
+        new ${className}Checker().checkCreate${className}(${classNameLowerFirst});
+        this.${classNameLowerFirst}Mapper.insertOrUpdate(${classNameLowerFirst});
+        return ${classNameLowerFirst};
+	}
+</#if>
+
 <#list table.columns as column>
 	<#if column.unique && !column.pk>
 	@Transactional(readOnly=true)
 	public ${className} getBy${column.columnName}(${column.javaType} v) {
 		return ${classNameLowerFirst}Mapper.getBy${column.columnName}(v);
-	}	
-	
+	}
 	</#if>
 </#list>
     
@@ -110,13 +121,14 @@ public class ${className}ServiceImpl implements ${className}Service {
     	Date now = new Date();
 		v.setCreatedTime(now);
 		v.setUpdatedTime(now);
+		v.setDelTag("0");
     }
 	/**
 	 * 为创建时初始化相关默认值
 	 **/
 	public void initDefaultValuesForUpdate(${className} v) {
-			Date now = new Date();
-			v.setUpdatedTime(now);
+		Date now = new Date();
+		v.setUpdatedTime(now);
 	}
 
     /**

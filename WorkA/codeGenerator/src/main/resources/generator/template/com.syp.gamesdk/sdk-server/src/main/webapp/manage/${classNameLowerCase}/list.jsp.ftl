@@ -3,6 +3,7 @@
 <#assign classNameFirstLower = className?uncap_first>
 <#assign classNameLowerCase = className?lower_case>
 <#assign pkJavaType = table.idColumn.javaType>
+<#assign seqHideField = ["updateTime", "updatedTime", "updatedBy", "delTag", "createTime", "createdBy", "createdTime", "id"]>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ page import="${basepackage}.manage.vo.${className}Vo" %>
 <%
@@ -45,8 +46,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<#list table.columns as column>
 							{
 								name: "<#if column.isDateTimeColumn>${column.columnNameLower}<#else>${column.columnNameLower}</#if>",index: "${column.columnNameLower}",
-								width: 10,sorttype: "int",align:"center",sortable:false, hidden: false
-                                <#if column.columnNameLower?ends_with("Tag")||column.columnNameLower?ends_with("Type")||column.columnNameLower?ends_with("stats")>
+								width: 10,sorttype: "int",align:"center",sortable:false <#if seqHideField?seq_contains(column.columnNameLower)>, hidden: true<#else>, hidden: false</#if>
+                                <#if column.columnAlias?matches('.+:.*')>
                                 ,formatter:function(cellvalue, options, rowObject){
 									var jsonEnumArray = <%=${className}Vo.${column.constantName}_JSON_MAP %>;
 									if(jsonEnumArray&&jsonEnumArray.length>0){
@@ -73,7 +74,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                      var width = $(".jqGrid_wrapper").width();
                      $("#table_list").setGridWidth(width);
                  });
-			
+			 $.fn.serializeObjectWithEmpty = function() {
+                var o = {};
+                var a = this.serializeArray();
+                $.each(a, function () {
+                    if(this.value){
+                        if (o[this.name]) {
+                            if (!o[this.name].push) {
+                                o[this.name] = [o[this.name]];
+                            }
+                            o[this.name].push(this.value || '');
+                        } else {
+                            o[this.name] = this.value || '';
+                        }
+                    }else{
+                        o[this.name] = '';
+                    }
+                });
+                return o;
+             }
      	    	$("#table-toolbar").mybuttons({
     				buttons: [{
     					text: "新增",
@@ -138,10 +157,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     					text: "编辑",
     					iconCls: "btn btn-primary fa fa-edit",
     					handler: function() {
-    						rowId = $("#table_list").jqGrid("getGridParam","selrow");
-    						if(rowId != null){
-	    						 rowData = $("#table_list").jqGrid("getRowData",rowId);
-	    						 id=rowData.ID;
+    						rowSeq = $("#table_list").jqGrid("getGridParam","selrow");
+    						if(rowSeq != null){
+	    						 rowData = $("#table_list").jqGrid("getRowData", rowSeq);
+	    						 rowKey=rowData.${table.idColumn.columnNameFirstLower};
     						}else{
     							$.msg.alert("提示", "请选择要编辑的<%=${className}Vo.TABLE_ALIAS %>");
     							return;
@@ -151,7 +170,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     							 $.msg.alert("提示", "只能选择单个进行编辑");
     								return;
     						}
-    						var id = rowId;
+    						var key = rowKey;
     						var index = parent.layer.open({
     						    type: 2,
     						    title: "编辑<%=${className}Vo.TABLE_ALIAS %>",
@@ -159,7 +178,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     						    shade: 0.8,
     						    time: 0,
     						    area: ["60%", "70%"],
-    						    content: getRoot() + "manage/${classNameLowerCase}/edit.zul?id="+id, //iframe的url,
+    						    content: getRoot() + "manage/${classNameLowerCase}/edit.zul?${table.idColumn.columnNameLower}="+key, //iframe的url,
     						    btn: ["保存","取消"],
     						    yes: function(index, curDocument){
     						    	var framefrom = parent.window.frames["layui-layer-iframe" + index];
@@ -204,15 +223,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     					text: "删除",
     					iconCls: "btn  btn-danger fa fa-times",
     					handler: function() {
-    						var rowIdsArr = jQuery("#table_list").jqGrid('getGridParam', 'selarrrow'); 
+    						var rowIdsArr = jQuery("#table_list").jqGrid('getGridParam', 'selarrrow');
     						if(rowIdsArr == null || rowIdsArr.length == 0){
 	    						 $.msg.alert("提示", "请选择要删除的<%=${className}Vo.TABLE_ALIAS%>");
 	    							return;
     						}
+    						var rowKeysArr = [];
+    						for(var i=0;i<rowIdsArr.length;i++){
+	    						 rowData = $("#table_list").jqGrid("getRowData", rowIdsArr[i]);
+	    						 rowKey=rowData.${table.idColumn.columnNameFirstLower};
+                                 rowKeysArr.push(rowKey);
+    						}
     						  $.msg.confirm("删除<%=${className}Vo.TABLE_ALIAS%>提示", "您确定删除吗?", function() {
 		    						$.ajax({
 		            					url: getRoot() + "manage/${classNameLowerCase}/del.zul",
-		            					data:{"arr[]":rowIdsArr},
+		            					data:{"arr[]": rowKeysArr},
 		            					type: "POST",
 		            					success: function(data) {
 		            						if("0" == data) {
@@ -280,7 +305,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    			page = $("#table_list").jqGrid("getGridParam","page");
 	    		}
 
-    			var postDatas = $("#searchForm").serializeObject();
+    			var postDatas = $("#searchForm").serializeObjectWithEmpty();
 
     			$("#table_list").jqGrid("setGridParam",{
     				url: ajaxURL, 
